@@ -3,7 +3,7 @@
   --bg:#0f172a; --panel:#0b1224; --card:#0b1430;
   --ink:#e5e7eb; --muted:#9aa5b1;
   --accent:#22d3ee; --accent-2:#a78bfa;
-  --radius:16px; --ring:0 0 0 3px rgba(34,211,238,.35);
+  --radius:0px; --ring:0 0 0 3px rgba(34,211,238,.35);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -85,3 +85,4 @@ canvas{background:#0b1328;border:1px solid rgba(255,255,255,.12);border-radius:1
   .choices{grid-template-columns:repeat(3, minmax(0,1fr))}
   .score-grid{grid-template-columns:1fr 1fr}
 }
+
