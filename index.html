@@ -62,7 +62,7 @@ Letter/Number to Color, Sound to Color/Shape, or Sequence to Spatial.
           <!-- Grapheme → Color (MCQ) -->
           <div id="q_grapheme" class="qpanel hidden" role="group" aria-labelledby="grapheme-label">
             <p class="instruction">Select the color that you feel best corresponds to the displayed letter.</p>
-            <div class="letter" id="letter" aria-live="polite" aria-atomic="true" aria-label="Current letter to choose color for"></div>
+            <div class="letter" id="letter" aria-live="polite" aria-atomic="true" aria-label="Current word to choose color for"></div>
             <div class="choices" id="graphemeChoices" role="list"></div>
           </div>
 
@@ -87,7 +87,7 @@ Letter/Number to Color, Sound to Color/Shape, or Sequence to Spatial.
 
           <!-- Sequence → Spatial (place 10 dots before clicking Next) -->
           <div id="q_sequence" class="qpanel hidden" role="group" aria-labelledby="sequence-label">
-            <p class="instruction">Place ten dots on the canvas in the order you perceive the sequence.</p>
+            <p class="instruction">Place ten dots on the canvas randomly</p>
             <div class="seq-head" id="sequence-label">Place dots for items 1–10</div>
             <div class="canvas-wrap">
               <canvas id="seqCanvas" width="900" height="520" tabindex="0" aria-describedby="canvasHelp" aria-label="Canvas to place dots for sequence test"></canvas>
@@ -128,7 +128,6 @@ Letter/Number to Color, Sound to Color/Shape, or Sequence to Spatial.
           </details>
           <div class="post-cta">
             <button id="retryBtn" class="btn">Try again</button>
-            <button id="saveBtn" class="btn">Save results (local)</button>
             <button id="exportBtn" class="btn">Export JSON</button>
           </div>
         </div>
@@ -147,7 +146,7 @@ Letter/Number to Color, Sound to Color/Shape, or Sequence to Spatial.
 
     <section id="contact" class="card" aria-labelledby="contact-title">
       <h2 id="contact-title">Contact & sharing</h2>
-      <p>Send feedback to <a href="mailto:example@example.com">dilipmn2009@gmail.com</a>.</p>
+      <p>Send feedback to <a href="mailto:dilipmn2009@gmail.com">dilipmn2009@gmail.com</a>.</p>
     </section>
   </main>
 
@@ -160,6 +159,8 @@ Letter/Number to Color, Sound to Color/Shape, or Sequence to Spatial.
   <script src="assets/script.js"></script>
 </body>
 </html>
+
+
 
 
 
