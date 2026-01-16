@@ -268,20 +268,50 @@
     const sScore = Math.round(sSum/tones.length);
 
     function dist(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return Math.sqrt(dx*dx+dy*dy); }
-    const diag = Math.sqrt(2);
+    
     let qSum=0, qCount=0; const qRows=[];
     for (let i=1;i<=10;i++){
       const k = String(i);
       const a = answers.sequence[1][k];
       const b = answers.sequence[2][k];
-      if (a && b){
-        const d = dist(a,b);
-        const s = Math.max(0, Math.round((1 - (d/diag))*100));
-        qSum += s; qCount++;
-        qRows.push({type:'Q', item:k, a:`(${a.x.toFixed(2)},${a.y.toFixed(2)})`, b:`(${b.x.toFixed(2)},${b.y.toFixed(2)})`, info:`Δ=${d.toFixed(2)} (norm)`, score:s});
-      } else {
-        qRows.push({type:'Q', item:k, a:'—', b:'—', info:'missing', score:0});
-      }
+      if (a && b) {
+  // distance between two normalized points (0–1 space)
+  const d = Math.sqrt(
+    Math.pow(a.x - b.x, 2) +
+    Math.pow(a.y - b.y, 2)
+  );
+
+  // max possible distance in normalized space (corner to corner)
+  const maxDist = Math.SQRT2; // ≈ 1.414
+
+  // normalize distance
+  const normalized = Math.min(1, d / maxDist);
+
+  // quadratic falloff → MUCH harsher penalty
+  const s = Math.max(0, Math.round((1 - normalized) ** 3 * 100));
+
+  qSum += s;
+  qCount++;
+
+  qRows.push({
+    type: 'Q',
+    item: k,
+    a: `(${a.x.toFixed(2)}, ${a.y.toFixed(2)})`,
+    b: `(${b.x.toFixed(2)}, ${b.y.toFixed(2)})`,
+    info: `Δ=${d.toFixed(3)} (norm)`,
+    score: s
+  });
+} else {
+  qRows.push({
+    type: 'Q',
+    item: k,
+    a: '—',
+    b: '—',
+    info: 'missing',
+    score: 0
+  });
+}
+
     }
     const qScore = qCount? Math.round(qSum/qCount) : 0;
 
@@ -295,7 +325,7 @@
     else if (parts.overall>=70) verdict = "High consistency across many items.";
     else if (parts.overall>=55) verdict = "Moderate consistency with mixed stability.";
     else verdict = "Low overall consistency.";
-    return `${verdict} Synesthesia result estimate: ${parts.overall}% based on repeated‑choice agreement. (Grapheme ${parts.gScore}/100, Sound ${parts.sScore}/100, Sequence ${parts.qScore}/100.) This is educational only — not diagnostic.`;
+    return `${verdict} You have a coorelation of approximately ${parts.overall}% based on your answer choices. This is educational only — not diagnostic.`;
   }
 
   function renderDetails(rows){
@@ -337,16 +367,7 @@
   resetBtn?.addEventListener('click', reset);
   retryBtn?.addEventListener('click', begin);
 
-  saveBtn?.addEventListener('click', () => {
-    const scores = computeScores();
-    const rec = { timestamp: new Date().toISOString(), scores, answers };
-    const key = 'synesthesia_pre_screen_history_v51';
-    const list = JSON.parse(localStorage.getItem(key) || '[]');
-    list.push(rec);
-    localStorage.setItem(key, JSON.stringify(list));
-    alert('Saved locally (browser storage).');
-  });
-
+  
   exportBtn?.addEventListener('click', () => {
     const scores = computeScores();
     const payload = { timestamp: new Date().toISOString(), scores, answers };
@@ -358,3 +379,5 @@
     URL.revokeObjectURL(url);
   });
 })();
+
+
